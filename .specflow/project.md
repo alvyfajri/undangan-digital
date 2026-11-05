@@ -11,13 +11,13 @@ Undangan pernikahan digital berbasis web untuk **satu pasangan**, bertema perpad
 - Main flow: tautan `?to=Nama` → cover dengan nama tamu → "Buka Undangan" (animasi pembuka + musik) → scroll: salam & ayat → acara + peta + kalender → galeri → amplop → penutup.
 
 ## Existing system and conventions
-Situs statis di `/Users/user/MyProjects/undangan-digital`, belum memakai git. Konvensi: konten hanya di `assets/js/data.js`, render via `textContent`, motion terpusat di `assets/js/motion.js`, token warna di `:root` pada `style.css`.
+Situs statis di `/Users/user/MyProjects/undangan-digital`, repo git `main` → https://github.com/alvyfajri/undangan-digital (referensi pihak ketiga di `artifacts/referensi/` di-gitignore). Konvensi: konten hanya di `assets/js/data.js`, render via `textContent`, motion terpusat di `assets/js/motion.js`, token warna di `:root` pada `style.css`.
 
 ## Product and technical foundations
 
 | Area | Choice or current fact | State | Basis |
 |---|---|---|---|
-| Repository | Situs statis (index.html + assets/), belum memakai git | Verified | Implementasi 2026-11-05 |
+| Repository | Situs statis (index.html + assets/), git di GitHub alvyfajri/undangan-digital (branch main) | Verified | Push 2026-11-05 |
 | Platform and client | Web mobile-first, tetap rapi di desktop | Confirmed | Jawaban user |
 | Language | HTML, CSS, JavaScript vanilla (script klasik `defer`, agar juga jalan via `file://`) | Confirmed | Jawaban user |
 | Framework | Tanpa framework. Animasi memakai GSAP + ScrollTrigger | Confirmed | Jawaban user |
