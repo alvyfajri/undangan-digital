@@ -7,3 +7,6 @@ Thumbs.db
 
 # Musik asli (tambahkan sendiri di hosting jika tidak ingin disimpan di repo)
 # assets/audio/*.mp3
+
+# Catatan konten pemilik (sudah dipindah ke data.js)
+content.md

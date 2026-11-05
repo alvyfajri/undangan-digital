@@ -10,19 +10,19 @@
 window.WEDDING = {
   mempelai: {
     pria: {
-      panggilan: "Raka",
-      lengkap: "Raka Adiwangsa, S.T.",
-      keterangan: "Putra pertama dari",
-      ayah: "Bapak H. Suryadi",
-      ibu: "Ibu Hj. Nurhasanah",
+      panggilan: "Alvy",
+      lengkap: "Alvy Fajri, S.Kom",
+      keterangan: "Putra ketiga dari",
+      ayah: "Bapak Akhmad Rosyidin",
+      ibu: "Ibu Sholikah",
       asal: "Cirebon",
     },
     wanita: {
-      panggilan: "Sekar",
-      lengkap: "Sekar Ayu Pratiwi, S.Pd.",
-      keterangan: "Putri kedua dari",
-      ayah: "Bapak Bambang Wijaya",
-      ibu: "Ibu Sri Lestari",
+      panggilan: "Aidah",
+      lengkap: "Aidah Wuryaningtyas, S.Pd",
+      keterangan: "Putri ketiga dari",
+      ayah: "Bapak Basuki",
+      ibu: "Ibu Patrin Wuryani",
       asal: "Cilacap",
     },
   },
@@ -31,24 +31,24 @@ window.WEDDING = {
   zonaWaktu: { label: "WIB", offset: "+07:00", iana: "Asia/Jakarta" },
 
   // Tanggal yang tampil di cover.
-  tanggalUtama: "2027-06-12T08:00",
+  tanggalUtama: "2026-12-13T08:00",
 
   acara: [
     {
       nama: "Akad Nikah",
-      mulai: "2027-06-12T08:00",
-      selesai: "2027-06-12T10:00", // isi null bila ingin tampil "selesai"
-      tempat: "Masjid Agung Darussalam (contoh)",
-      alamat: "Jl. Jend. Sudirman, Sidanegara, Cilacap Tengah, Kab. Cilacap",
+      mulai: "2026-12-13T08:00",
+      selesai: "2026-12-13T10:00", // isi null bila ingin tampil "selesai"
+      tempat: "Masjid Agung Darussalam Cilacap",
+      alamat: "Jl. Masjid No.1, Sidanegara, Kec. Cilacap Tengah, Kabupaten Cilacap, Jawa Tengah",
       maps: "https://www.google.com/maps/search/?api=1&query=Masjid+Agung+Darussalam+Cilacap",
     },
     {
       nama: "Resepsi",
-      mulai: "2027-06-12T11:00",
-      selesai: null,
-      tempat: "Pendopo Wijayakusuma (contoh)",
-      alamat: "Jl. Contoh No. 12, Cilacap Selatan, Kab. Cilacap",
-      maps: "https://www.google.com/maps/search/?api=1&query=Alun-alun+Cilacap",
+      mulai: "2026-12-13T11:00",
+      selesai: "2026-12-13T14:00",
+      tempat: "Graha Darussalam Cilacap",
+      alamat: "Jl. Masjid No.1, Sidanegara, Kec. Cilacap Tengah, Kabupaten Cilacap, Jawa Tengah",
+      maps: "https://www.google.com/maps/search/?api=1&query=Graha+Darussalam+Cilacap",
     },
   ],
 

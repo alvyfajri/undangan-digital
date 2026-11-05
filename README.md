@@ -24,7 +24,7 @@ Semua isi ada di **`assets/js/data.js`**. Edit file ini saja, tidak perlu menyen
 | Bagian | Yang diubah |
 |---|---|
 | Mempelai | `mempelai.pria` / `mempelai.wanita`: panggilan, nama lengkap, keterangan ("Putra pertama dari"), ayah, ibu, asal |
-| Tanggal cover | `tanggalUtama` → `"2027-06-12T08:00"` |
+| Tanggal cover | `tanggalUtama` → `"2026-12-13T08:00"` |
 | Acara | `acara[]`: nama, `mulai`, `selesai` (isi `null` jika "selesai"), tempat, alamat, `maps` (link Google Maps) |
 | Galeri | `galeri[]`: `{ src, alt }`. Kosongkan `[]` untuk menyembunyikan bagian ini |
 | Amplop | `amplop[]`: bank, nomor, atasNama. `qris` diisi path gambar (opsional) |
