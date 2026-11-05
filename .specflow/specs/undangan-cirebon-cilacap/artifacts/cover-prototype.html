@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototipe Cover — Undangan Cirebon–Cilacap</title>
+<!-- Provenance: sample. Referensi arah visual saja (CSS-only, font sistem). Aplikasi final memakai GSAP + font lokal. -->
+<style>
+  :root{
+    --indigo-900:#14204a;--indigo-700:#23376e;--indigo-500:#3d5a9e;--indigo-300:#8ea3d1;
+    --emas:#c9a24a;--emas-terang:#e6c878;--krem:#f5ecd9;--kertas:#faf5ea;--tinta:#1d1a16;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--indigo-900);font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;color:var(--krem);min-height:100vh;display:flex;justify-content:center}
+  .phone{position:relative;width:100%;max-width:480px;min-height:100vh;overflow:hidden;
+    background:radial-gradient(120% 80% at 50% 45%,var(--indigo-700),var(--indigo-900))}
+  .badge{position:absolute;top:8px;left:8px;z-index:20;font:11px/1 system-ui,sans-serif;background:#0008;color:#fff;padding:4px 8px;border-radius:99px}
+
+  /* awan Mega Mendung */
+  .cloud{position:absolute;width:78%;z-index:2;transition:transform 1.8s cubic-bezier(.7,0,.2,1),opacity 1.8s}
+  .cloud svg{width:100%;height:auto;display:block}
+  .c-tl{top:-2%;left:-22%;animation:drift 9s ease-in-out infinite}
+  .c-tr{top:9%;right:-26%;animation:drift 11s ease-in-out infinite reverse}
+  .c-bl{bottom:16%;left:-28%;animation:drift 10s ease-in-out infinite reverse}
+  .c-br{bottom:3%;right:-20%;animation:drift 12s ease-in-out infinite}
+  @keyframes drift{50%{translate:12px 4px}}
+
+  /* ombak Teluk Penyu */
+  .waves{position:absolute;left:0;right:0;bottom:0;height:90px;z-index:3;overflow:hidden}
+  .waves svg{position:absolute;bottom:0;width:200%;height:100%;animation:wave 14s linear infinite}
+  .waves svg:nth-child(2){animation-duration:9s;opacity:.6;bottom:-10px}
+  @keyframes wave{to{transform:translateX(-50%)}}
+
+  /* konten cover */
+  .cover{position:relative;z-index:5;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px 120px;transition:opacity 1s,transform 1.2s}
+  .eyebrow{letter-spacing:.35em;text-transform:uppercase;font-size:13px;color:var(--emas-terang)}
+  .flower{width:110px;margin:18px 0 6px}
+  .flower .petal{transform-origin:50px 50px;animation:bloom 2.4s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes bloom{from{transform:rotate(var(--r)) scale(.1);opacity:0}to{transform:rotate(var(--r)) scale(1);opacity:1}}
+  .names{font-family:"Pinyon Script","Snell Roundhand","Apple Chancery",cursive;font-size:54px;line-height:1.1;color:var(--kertas);text-shadow:0 2px 18px #0006}
+  .names span{display:block;font-size:30px;color:var(--emas)}
+  .date{margin-top:10px;font-size:18px;letter-spacing:.12em}
+  .guest{margin:28px 0 18px;font-size:16px;color:var(--indigo-300)}
+  .guest b{display:block;margin-top:6px;font-size:24px;color:var(--kertas);font-weight:600}
+  .btn{font:inherit;font-size:17px;font-weight:600;letter-spacing:.06em;color:var(--indigo-900);background:linear-gradient(180deg,var(--emas-terang),var(--emas));border:0;border-radius:99px;padding:12px 28px;cursor:pointer;box-shadow:0 0 0 1px #fff5 inset,0 6px 24px #c9a24a55;animation:glow 2.6s ease-in-out infinite}
+  .btn:focus-visible{outline:2px solid var(--kertas);outline-offset:4px}
+  @keyframes glow{50%{box-shadow:0 0 0 1px #fff5 inset,0 6px 34px #e6c878aa}}
+
+  /* tahap setelah dibuka */
+  .opened .c-tl,.opened .c-bl{transform:translateX(-90%) scale(1.3);opacity:0}
+  .opened .c-tr,.opened .c-br{transform:translateX(90%) scale(1.3);opacity:0}
+  .opened .cover{opacity:0;transform:scale(1.08);pointer-events:none}
+  .next{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 28px 120px;background:var(--kertas);color:var(--tinta);opacity:0;transition:opacity 1.2s .6s}
+  .opened .next{opacity:1}
+  .next h2{font-size:30px;color:var(--indigo-700);font-weight:600}
+  .next p{margin-top:12px;font-size:17px;line-height:1.55;max-width:34ch}
+  .next small{margin-top:24px;font:12px system-ui,sans-serif;color:#7a705f}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition-duration:.01s!important}
+  }
+</style>
+</head>
+<body>
+<div class="phone" id="phone">
+  <span class="badge">Prototipe · data contoh</span>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <!-- satu lapis awan Mega Mendung; dipakai berulang dengan skala menurun -->
+      <path id="mm" d="M8 92c-6-22 10-38 30-34 2-24 28-36 48-24 10-22 44-26 60-6 22-12 50 2 50 26 22-2 38 18 30 38z"/>
+    </defs>
+  </svg>
+
+  <!-- 4 kelompok awan, gradasi indigo berlapis -->
+  <template id="cloudTpl">
+    <svg viewBox="0 0 240 110" aria-hidden="true">
+      <g fill="none" stroke="#e6c87866" stroke-width="1.2">
+        <use href="#mm" fill="#14204a"/>
+        <use href="#mm" fill="#23376e" transform="translate(16 10) scale(.87)"/>
+        <use href="#mm" fill="#2e4785" transform="translate(32 20) scale(.74)"/>
+        <use href="#mm" fill="#3d5a9e" transform="translate(48 30) scale(.61)"/>
+        <use href="#mm" fill="#6580bd" transform="translate(64 40) scale(.48)"/>
+        <use href="#mm" fill="#8ea3d1" transform="translate(80 50) scale(.35)"/>
+      </g>
+    </svg>
+  </template>
+  <div class="cloud c-tl"></div><div class="cloud c-tr"></div>
+  <div class="cloud c-bl"></div><div class="cloud c-br"></div>
+
+  <div class="waves" aria-hidden="true">
+    <svg viewBox="0 0 960 90" preserveAspectRatio="none"><path fill="#23376e" stroke="#c9a24a" stroke-width="1.5" d="M0 50 Q60 20 120 50 T240 50 T360 50 T480 50 T600 50 T720 50 T840 50 T960 50 V90 H0Z"/></svg>
+    <svg viewBox="0 0 960 90" preserveAspectRatio="none"><path fill="#3d5a9e" d="M0 60 Q40 40 80 60 T160 60 T240 60 T320 60 T400 60 T480 60 T560 60 T640 60 T720 60 T800 60 T880 60 T960 60 V90 H0Z"/></svg>
+  </div>
+
+  <main class="cover">
+    <p class="eyebrow">Undangan Pernikahan</p>
+    <!-- Wijayakusuma: kelopak panjang mekar -->
+    <svg class="flower" viewBox="0 0 100 100" aria-hidden="true" id="flower"></svg>
+    <h1 class="names">Raka<span>&amp;</span>Sekar</h1>
+    <p class="date">SABTU · 12 · 06 · 2027</p>
+    <p class="guest">Kepada Yth.<b id="guest">Bapak/Ibu/Saudara/i</b></p>
+    <button class="btn" id="open">Buka Undangan</button>
+  </main>
+
+  <section class="next" aria-live="polite">
+    <h2>Assalamu’alaikum Wr. Wb.</h2>
+    <p>Di aplikasi final, salam, QS Ar-Rum 21, dan mempelai (Cirebon &amp; Cilacap) akan muncul bertahap di sini, disusul acara, galeri, dan amplop.</p>
+    <small>Ini contoh visual — muat ulang untuk mengulang animasi.</small>
+  </section>
+</div>
+
+<script>
+  // Awan
+  const tpl = document.getElementById('cloudTpl');
+  document.querySelectorAll('.cloud').forEach(c => c.append(tpl.content.cloneNode(true)));
+
+  // Wijayakusuma: 8 kelopak luar + 6 kelopak dalam
+  const f = document.getElementById('flower'), ns = 'http://www.w3.org/2000/svg';
+  [[8, 46, '#faf5ea', 0], [6, 30, '#f5ecd9', 22]].forEach(([n, len, fill, off]) => {
+    for (let i = 0; i < n; i++) {
+      const p = document.createElementNS(ns, 'ellipse');
+      p.setAttribute('cx', 50); p.setAttribute('cy', 50 - len / 2);
+      p.setAttribute('rx', 6.5); p.setAttribute('ry', len / 2);
+      p.setAttribute('fill', fill); p.setAttribute('stroke', '#c9a24a'); p.setAttribute('stroke-width', '.8');
+      p.classList.add('petal');
+      p.style.setProperty('--r', (off + i * 360 / n) + 'deg');
+      p.style.animationDelay = (i * 0.08) + 's';
+      f.append(p);
+    }
+  });
+  const core = document.createElementNS(ns, 'circle');
+  core.setAttribute('cx', 50); core.setAttribute('cy', 50); core.setAttribute('r', 6); core.setAttribute('fill', '#e6c878');
+  f.append(core);
+
+  // Nama tamu: textContent saja (aman)
+  const to = new URLSearchParams(location.search).get('to');
+  if (to && to.trim()) document.getElementById('guest').textContent = to.trim().slice(0, 60);
+
+  document.getElementById('open').addEventListener('click', () => document.getElementById('phone').classList.add('opened'));
+</script>
+</body>
+</html>

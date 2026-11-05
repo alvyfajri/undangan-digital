@@ -1,0 +1,9 @@
+# Sistem
+.DS_Store
+Thumbs.db
+
+# Foto/berkas referensi pihak ketiga (hanya acuan desain, tidak didistribusikan)
+.specflow/specs/*/artifacts/referensi/
+
+# Musik asli (tambahkan sendiri di hosting jika tidak ingin disimpan di repo)
+# assets/audio/*.mp3

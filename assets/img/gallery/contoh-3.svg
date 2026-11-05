@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14204a"/><stop offset="1" stop-color="#14204a"/></linearGradient>
+<path id="c" d="M8 92c-6-22 10-38 30-34 2-24 28-36 48-24 10-22 44-26 60-6 22-12 50 2 50 26 22-2 38 18 30 38z" fill="#c9a24a" stroke="#e6c878" stroke-opacity=".5"/></defs>
+<rect width="800" height="600" fill="url(#g)"/>
+<g transform="translate(80 192) scale(2.67)"><use href="#c" transform="translate(0 0) scale(1.00)" fill-opacity="0.25"/><use href="#c" transform="translate(16 10) scale(0.87)" fill-opacity="0.37"/><use href="#c" transform="translate(32 20) scale(0.74)" fill-opacity="0.49"/><use href="#c" transform="translate(48 30) scale(0.61)" fill-opacity="0.61"/><use href="#c" transform="translate(64 40) scale(0.48)" fill-opacity="0.73"/></g>
+<text x="50%" y="540" text-anchor="middle" font-family="Georgia,serif" font-size="50" fill="#f5ecd9" fill-opacity=".85">Foto contoh 3</text>
+</svg>
