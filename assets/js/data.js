@@ -22,7 +22,7 @@ window.WEDDING = {
       lengkap: "Aidah Wuryaningtyas, S.Pd",
       keterangan: "Putri ketiga dari",
       ayah: "Bapak Basuki",
-      ibu: "Ibu Patrin Wuryani",
+      ibu: "Ibu Partin Wuryani",
       asal: "Cilacap",
     },
   },
