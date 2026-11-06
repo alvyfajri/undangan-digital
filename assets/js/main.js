@@ -95,7 +95,32 @@
     var v = get(n.getAttribute("data-bind"));
     if (v != null) n.textContent = v;
   });
-  if (D.mempelai) doc.title = "Undangan Pernikahan " + D.mempelai.pria.panggilan + " & " + D.mempelai.wanita.panggilan;
+
+  /* ---------- urutan nama: laki-laki dulu (default) atau perempuan dulu ---------- */
+  // Diatur lewat data.js (urutanNama) atau link: ?urutan=wanita / ?urutan=pria
+  var urutan = D.urutanNama === "wanita" ? "wanita" : "pria";
+  try {
+    var qUrut = (new URLSearchParams(location.search).get("urutan") || "").toLowerCase();
+    if (qUrut === "wanita" || qUrut === "perempuan" || qUrut === "w") urutan = "wanita";
+    else if (qUrut === "pria" || qUrut === "laki" || qUrut === "laki-laki" || qUrut === "p") urutan = "pria";
+  } catch (e) { /* abaikan */ }
+  if (urutan === "wanita") {
+    // Tukar posisi setiap pasangan [data-urut="pria"] dan [data-urut="wanita"] yang sesaudara.
+    $$('[data-urut="pria"]').forEach(function (p) {
+      var w = $(':scope > [data-urut="wanita"]', p.parentNode);
+      if (!w) return;
+      var mark = doc.createComment("");
+      p.parentNode.replaceChild(mark, w);
+      p.parentNode.replaceChild(w, p);
+      mark.parentNode.replaceChild(p, mark);
+    });
+  }
+  var namaPasangan = D.mempelai
+    ? (urutan === "wanita"
+        ? D.mempelai.wanita.panggilan + " & " + D.mempelai.pria.panggilan
+        : D.mempelai.pria.panggilan + " & " + D.mempelai.wanita.panggilan)
+    : "";
+  if (D.mempelai) doc.title = "Undangan Pernikahan " + namaPasangan;
   if (D.tanggalUtama) $("#cover-date").textContent = fmtDay(D.tanggalUtama);
 
   /* ---------- AC1: nama tamu ---------- */
@@ -129,7 +154,7 @@
     }
     var start = toDate(a.mulai);
     var end = a.selesai ? toDate(a.selesai) : new Date(start.getTime() + 2 * 3600 * 1000);
-    var names = D.mempelai ? D.mempelai.pria.panggilan + " & " + D.mempelai.wanita.panggilan : "";
+    var names = namaPasangan;
     var cal = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
       "&text=" + encodeURIComponent(a.nama + " " + names) +
       "&dates=" + utcStamp(start) + "/" + utcStamp(end) +

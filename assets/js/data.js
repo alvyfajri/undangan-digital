@@ -27,6 +27,10 @@ window.WEDDING = {
     },
   },
 
+  // Urutan nama: "pria" = laki-laki dulu, "wanita" = perempuan dulu.
+  // Bisa juga per link: tambahkan ?urutan=wanita (mis. ?to=Budi&urutan=wanita).
+  urutanNama: "pria",
+
   // Zona waktu acara. WIB = +07:00 / Asia/Jakarta.
   zonaWaktu: { label: "WIB", offset: "+07:00", iana: "Asia/Jakarta" },
 

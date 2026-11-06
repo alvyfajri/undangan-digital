@@ -47,9 +47,9 @@
     <div class="cover__sky">
       <p class="eyebrow" data-cover-item>Undangan Pernikahan</p>
       <h1 class="script cover__names" id="cover-names" data-cover-item>
-        <span data-bind="pria.panggilan"></span>
+        <span data-urut="pria" data-bind="pria.panggilan"></span>
         <span class="amp">&amp;</span>
-        <span data-bind="wanita.panggilan"></span>
+        <span data-urut="wanita" data-bind="wanita.panggilan"></span>
       </h1>
       <p class="cover__date" id="cover-date" data-cover-item></p>
     </div>
@@ -94,7 +94,7 @@
       <p class="salam__intro" data-reveal data-bind="teks.pengantar"></p>
 
       <div class="couple">
-        <article class="person" data-reveal>
+        <article class="person" data-reveal data-urut="pria">
           <span class="person__origin" data-bind="pria.asal"></span>
           <h2 class="script person__nick" data-bind="pria.panggilan"></h2>
           <p class="person__full" data-bind="pria.lengkap"></p>
@@ -106,7 +106,7 @@
 
         <div class="couple__amp script" data-reveal aria-hidden="true">&amp;</div>
 
-        <article class="person" data-reveal>
+        <article class="person" data-reveal data-urut="wanita">
           <span class="person__origin person__origin--sea" data-bind="wanita.asal"></span>
           <h2 class="script person__nick" data-bind="wanita.panggilan"></h2>
           <p class="person__full" data-bind="wanita.lengkap"></p>
@@ -191,12 +191,12 @@
       <p class="penutup__salam" data-reveal data-bind="teks.salamPenutup"></p>
       <p class="penutup__sign" data-reveal>Kami yang berbahagia,</p>
       <p class="script penutup__names" data-reveal>
-        <span data-bind="pria.panggilan"></span> &amp; <span data-bind="wanita.panggilan"></span>
+        <span data-urut="pria" data-bind="pria.panggilan"></span> &amp; <span data-urut="wanita" data-bind="wanita.panggilan"></span>
       </p>
       <p class="penutup__family" data-reveal>
-        <span class="fam">Keluarga Besar<br><span data-bind="pria.ayah"></span> &amp; <span data-bind="pria.ibu"></span>
+        <span class="fam" data-urut="pria">Keluarga Besar<br><span data-bind="pria.ayah"></span> &amp; <span data-bind="pria.ibu"></span>
           <small>(<span data-bind="pria.asal"></span>)</small></span>
-        <span class="fam">Keluarga Besar<br><span data-bind="wanita.ayah"></span> &amp; <span data-bind="wanita.ibu"></span>
+        <span class="fam" data-urut="wanita">Keluarga Besar<br><span data-bind="wanita.ayah"></span> &amp; <span data-bind="wanita.ibu"></span>
           <small>(<span data-bind="wanita.asal"></span>)</small></span>
       </p>
       <div class="waves penutup__waves" data-orn="waves"></div>
