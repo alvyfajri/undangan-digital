@@ -54,6 +54,15 @@ https://domain-anda.com/?to=Keluarga%20Besar%20Bapak%20Ahmad
 
 Tanpa `?to=`, cover menampilkan "Bapak/Ibu/Saudara/i". Nama tamu dibatasi 60 karakter dan selalu ditampilkan sebagai teks biasa, jadi aman meskipun berisi karakter aneh.
 
+> **Setelah mengubah `data.js`, CSS, atau JS:** naikkan angka `?v=` di `index.html` (mis. `?v=2` → `?v=3`). Browser menyimpan cache file ini selama 7 hari, jadi tanpa itu tamu yang pernah membuka undangan bisa melihat versi lama.
+
+**Urutan nama (laki-laki / perempuan dulu):** defaultnya laki-laki dulu (`urutanNama: "pria"` di `data.js`). Untuk versi perempuan dulu, tambahkan `&urutan=wanita` di link tamu. Urutan berubah di cover, profil mempelai, penutup (nama & keluarga besar), judul halaman, dan kalender:
+
+```
+https://domain-anda.com/?to=Budi+Santoso                  ← laki-laki dulu
+https://domain-anda.com/?to=Budi+Santoso&urutan=wanita    ← perempuan dulu
+```
+
 ## 5. Ucapan & Doa (SQLite)
 
 Tamu mengisi nama (otomatis terisi dari `?to=`), konfirmasi kehadiran (Hadir / Masih ragu / Tidak hadir), dan ucapan. Data disimpan di **`api/data/ucapan.sqlite`**, yang dibuat otomatis saat ucapan pertama masuk, lalu ditampilkan di bawah form beserta rekap kehadiran.
