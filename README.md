@@ -84,14 +84,16 @@ Upload **seluruh isi folder** ini (kecuali `.specflow/`, yang berisi spec dan fo
 
 ## 7. Jalankan dengan Docker (VPS)
 
-Image memakai `php:8.3-apache` (PHP + SQLite sudah bawaan). Database ucapan disimpan di volume Docker `ucapan-data`, jadi tidak hilang saat container dibangun ulang.
+Image memakai `php:8.3-apache` (PHP + SQLite sudah bawaan). Folder project di-mount langsung ke container (read-only), jadi Apache membaca file terbaru dari folder di VPS. Database ucapan disimpan di volume Docker `ucapan-data`, jadi tidak hilang saat container dibuat ulang.
 
 ```bash
-git pull
-docker compose up -d --build     # jalankan / perbarui
+docker compose up -d --build     # pertama kali, atau setelah Dockerfile / docker/ berubah
+git pull                         # perbarui isi undangan: langsung tampil, tanpa build ulang
 docker compose logs -f           # lihat log
 docker compose down              # hentikan (data ucapan tetap aman)
 ```
+
+Yang bisa diakses publik hanya `index.html`, `assets/`, dan `api/ucapan.php`. File lain di folder project (`.git`, `README.md`, `form.md`, `Dockerfile`, dll.) ditolak oleh Apache (aturan di `docker/apache-undangan.conf`).
 
 Container terbuka di port **8055** (`http://IP-VPS:8055`). Buka port tersebut di firewall bila perlu (`sudo ufw allow 8055/tcp`). Untuk domain dan HTTPS, pasang Nginx di host sebagai reverse proxy:
 

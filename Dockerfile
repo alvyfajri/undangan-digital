@@ -19,6 +19,9 @@ COPY --chown=www-data:www-data api ./api
 RUN chown -R www-data:www-data /var/www/html/api/data && chmod 775 /var/www/html/api/data
 VOLUME /var/www/html/api/data
 
+# Pastikan folder database bisa ditulis PHP, juga pada volume yang baru dibuat.
+CMD ["sh", "-c", "chown www-data:www-data /var/www/html/api/data && exec apache2-foreground"]
+
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
   CMD curl -fsS http://localhost/api/ucapan.php >/dev/null || exit 1
 

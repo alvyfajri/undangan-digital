@@ -10,6 +10,13 @@ services:
       # Ganti menjadi "127.0.0.1:8055:80" bila hanya ingin diakses lewat Nginx di host.
       - "8055:80"
     volumes:
+      # Folder project di-mount langsung (read-only): cukup `git pull`, tanpa build ulang.
+      # Seluruh folder di-mount (bukan per file) karena git mengganti file dengan file baru,
+      # sehingga mount per file akan tetap menunjuk ke versi lama.
+      # Hanya index.html, assets/, dan api/ucapan.php yang bisa diakses publik
+      # (diatur di docker/apache-undangan.conf).
+      - ./:/var/www/html:ro
+      # Database ucapan tetap di volume (bisa ditulis), menimpa api/data dari mount di atas.
       - ucapan-data:/var/www/html/api/data
 
 volumes:
