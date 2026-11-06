@@ -17,7 +17,7 @@
   --indigo-300: #8ea3d1;
   --emas: #c9a24a;
   --emas-terang: #e6c878;
-  --emas-gelap: #8f6d22;
+  --emas-gelap: #7d5e1b;
   --krem: #f5ecd9;
   --wk-blush: #f1dade; --wk-stamen: #e9c75a;
   --kertas: #faf5ea;
@@ -311,7 +311,7 @@ textarea.field__input { resize: vertical; min-height: 110px; line-height: 1.5; }
 .wish__badge--tidak { background: #8a4b45; }
 .wish__badge--ragu { background: var(--emas-gelap); }
 .wish__text { margin-top: 4px; font-size: 17px; color: var(--tinta-2); white-space: pre-line; overflow-wrap: anywhere; }
-.wish__time { display: block; margin-top: 4px; font-size: 13px; color: #8a8170; }
+.wish__time { display: block; margin-top: 4px; font-size: 13px; color: #6f6656; }
 
 /* Penutup */
 .penutup { padding-bottom: 150px; }
