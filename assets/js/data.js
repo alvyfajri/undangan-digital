@@ -64,8 +64,8 @@ window.WEDDING = {
 
   // Amplop digital. Kosongkan ([]) untuk menyembunyikan.
   amplop: [
-    { bank: "BNI", nomor: "1234 5678 90", atasNama: "Alvy Fajri" },
-    { bank: "Bank Mandiri", nomor: "1370 0012 3456 7", atasNama: "Sekar Ayu Pratiwi" },
+    { bank: "Bank BNI", nomor: "1299780343", atasNama: "Alvy Fajri" },
+    { bank: "Bank BTN", nomor: "38001700011321", atasNama: "Aidah Wuryaningtyas" },
   ],
   // Gambar QRIS (opsional), mis. "assets/img/qris.png". Kosongkan "" bila tidak ada.
   qris: "",
