@@ -1,0 +1,15 @@
+services:
+  undangan:
+    build: .
+    image: undangan-digital
+    container_name: undangan
+    restart: unless-stopped
+    ports:
+      # Hanya bisa diakses dari server sendiri; HTTPS & domain ditangani Nginx di host.
+      # Ganti menjadi "80:80" bila ingin langsung dibuka tanpa Nginx.
+      - "127.0.0.1:8080:8055"
+    volumes:
+      - ucapan-data:/var/www/html/api/data
+
+volumes:
+  ucapan-data:

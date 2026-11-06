@@ -73,7 +73,46 @@ Upload **seluruh isi folder** ini (kecuali `.specflow/`, yang berisi spec dan fo
 - Butuh PHP (untuk form ucapan). Tidak perlu Node atau server database: SQLite cukup berupa satu file.
 - Setelah upload, coba `https://domain-anda.com/?to=Tes` dari HP.
 
-## 7. Struktur
+## 7. Jalankan dengan Docker (VPS)
+
+Image memakai `php:8.3-apache` (PHP + SQLite sudah bawaan). Database ucapan disimpan di volume Docker `ucapan-data`, jadi tidak hilang saat container dibangun ulang.
+
+```bash
+git pull
+docker compose up -d --build     # jalankan / perbarui
+docker compose logs -f           # lihat log
+docker compose down              # hentikan (data ucapan tetap aman)
+```
+
+Secara default container hanya terbuka di `127.0.0.1:8080`. Domain dan HTTPS ditangani Nginx di host:
+
+```nginx
+server {
+    listen 80;
+    server_name undangan.domainanda.com;
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+Lalu `sudo nginx -t && sudo systemctl reload nginx` dan `sudo certbot --nginx -d undangan.domainanda.com`.
+
+**Mengelola ucapan:**
+
+```bash
+# hapus satu ucapan
+docker compose exec --user www-data undangan php -r '$d=new PDO("sqlite:api/data/ucapan.sqlite"); $d->exec("DELETE FROM ucapan WHERE id = 12");'
+# backup ke folder saat ini
+docker compose cp undangan:/var/www/html/api/data/ucapan.sqlite ./backup-ucapan.sqlite
+```
+
+> Jangan jalankan `docker compose down -v`: opsi `-v` menghapus volume beserta semua ucapan.
+
+## 8. Struktur
 
 ```
 index.html              kerangka halaman + sprite awan Mega Mendung
@@ -82,6 +121,7 @@ assets/js/ornaments.js  gambar SVG: Gerbang Keraton, mahkota Wadasan, Wijayakusu
 assets/js/main.js       render data, nama tamu, musik, galeri, amplop, ucapan
 api/ucapan.php          API ucapan (GET daftar, POST kirim) → SQLite
 api/data/               lokasi ucapan.sqlite (dibuat otomatis, tidak masuk git)
+Dockerfile, docker/     image Apache + PHP; docker-compose.yml menjalankannya
 assets/js/motion.js     semua animasi GSAP + ScrollTrigger
 assets/css/style.css    warna (token di :root), tata letak
 assets/vendor/gsap/     GSAP 3.12.5 (lokal)
@@ -92,7 +132,7 @@ assets/audio/           taruh musik.mp3 di sini
 
 **Warna:** ubah token `--indigo-*`, `--emas*`, `--krem`, dan `--kertas` di bagian atas `style.css`. Warna awan Mega Mendung diatur oleh `--mm-1` (garis luar), `--mm-line` (garis krem), `--mm-2`…`--mm-4` (pita terang → tua), dan `--mm-5` (inti).
 
-## 8. Aksesibilitas & performa
+## 9. Aksesibilitas & performa
 
 - Pengguna dengan pengaturan **kurangi gerakan** (reduce motion) melihat semua konten tanpa parallax atau animasi berulang.
 - Jika GSAP gagal dimuat, undangan tetap terbuka dan semua konten tampil.

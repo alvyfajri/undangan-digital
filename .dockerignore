@@ -1,0 +1,11 @@
+.git
+.gitignore
+.specflow
+.DS_Store
+README.md
+content.md
+form.md
+Dockerfile
+docker-compose.yml
+.dockerignore
+api/data/*.sqlite*
