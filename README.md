@@ -84,14 +84,14 @@ docker compose logs -f           # lihat log
 docker compose down              # hentikan (data ucapan tetap aman)
 ```
 
-Secara default container hanya terbuka di `127.0.0.1:8080`. Domain dan HTTPS ditangani Nginx di host:
+Container terbuka di port **8055** (`http://IP-VPS:8055`). Buka port tersebut di firewall bila perlu (`sudo ufw allow 8055/tcp`). Untuk domain dan HTTPS, pasang Nginx di host sebagai reverse proxy:
 
 ```nginx
 server {
     listen 80;
     server_name undangan.domainanda.com;
     location / {
-        proxy_pass http://127.0.0.1:8080;
+        proxy_pass http://127.0.0.1:8055;
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
