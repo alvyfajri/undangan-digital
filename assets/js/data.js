@@ -64,12 +64,15 @@ window.WEDDING = {
 
   // Amplop digital. Kosongkan ([]) untuk menyembunyikan.
   amplop: [
-    { bank: "BCA", nomor: "1234 5678 90", atasNama: "Raka Adiwangsa" },
+    { bank: "BNI", nomor: "1234 5678 90", atasNama: "Alvy Fajri" },
     { bank: "Bank Mandiri", nomor: "1370 0012 3456 7", atasNama: "Sekar Ayu Pratiwi" },
-    { bank: "DANA", nomor: "0812 3456 7890", atasNama: "Sekar Ayu Pratiwi" },
   ],
   // Gambar QRIS (opsional), mis. "assets/img/qris.png". Kosongkan "" bila tidak ada.
   qris: "",
+
+  // Ucapan & doa tamu, disimpan di SQLite oleh api/ucapan.php (hosting harus mendukung PHP).
+  // Kosongkan "" untuk menyembunyikan bagian ucapan.
+  ucapanApi: "api/ucapan.php",
 
   // Musik latar. Taruh file mp3 di assets/audio/. Kosongkan "" untuk mematikan.
   musik: "assets/audio/musik.mp3",
@@ -85,6 +88,8 @@ window.WEDDING = {
     ayatSumber: "QS. Ar-Rum: 21",
     amplopPengantar:
       "Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika Anda ingin memberikan tanda kasih, dapat melalui:",
+    ucapanPengantar:
+      "Kirimkan doa dan ucapan terbaik Anda untuk kedua mempelai, sekaligus konfirmasi kehadiran.",
     penutup:
       "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.",
     salamPenutup: "Wassalamu’alaikum Warahmatullahi Wabarakatuh",

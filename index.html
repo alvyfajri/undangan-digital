@@ -150,6 +150,40 @@
       </figure>
     </section>
 
+    <!-- Ucapan & Doa (disimpan di SQLite lewat api/ucapan.php) -->
+    <section class="sec sec--paper ucapan" id="ucapan">
+      <p class="eyebrow eyebrow--ink" data-reveal>Doa Restu</p>
+      <h2 class="sec__title sec__title--ink script" data-reveal>Ucapan &amp; Doa</h2>
+      <p class="ucapan__intro" data-reveal data-bind="teks.ucapanPengantar"></p>
+
+      <form class="wish-form" id="wish-form" data-reveal novalidate>
+        <label class="field">
+          <span class="field__label">Nama</span>
+          <input class="field__input" type="text" name="nama" id="wish-nama" maxlength="60" autocomplete="name" required>
+        </label>
+        <fieldset class="field field--choice">
+          <legend class="field__label">Konfirmasi kehadiran</legend>
+          <label class="choice"><input type="radio" name="kehadiran" value="hadir" required><span>Hadir</span></label>
+          <label class="choice"><input type="radio" name="kehadiran" value="ragu"><span>Masih ragu</span></label>
+          <label class="choice"><input type="radio" name="kehadiran" value="tidak"><span>Tidak hadir</span></label>
+        </fieldset>
+        <label class="field">
+          <span class="field__label">Ucapan &amp; doa</span>
+          <textarea class="field__input" name="ucapan" id="wish-ucapan" rows="4" maxlength="500" required></textarea>
+          <span class="field__count" id="wish-count" aria-live="polite">0 / 500</span>
+        </label>
+        <!-- honeypot anti-bot: disembunyikan dari manusia -->
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="wish-form__error" id="wish-error" role="alert" hidden></p>
+        <button class="btn btn--ink wish-form__submit" type="submit" id="wish-submit">Kirim Ucapan</button>
+      </form>
+
+      <div class="wish-stats" id="wish-stats" data-reveal hidden></div>
+      <div class="wishes" id="wishes" data-reveal aria-live="polite">
+        <p class="wishes__empty" id="wishes-status">Memuat ucapan…</p>
+      </div>
+    </section>
+
     <!-- Penutup -->
     <section class="sec sec--paper penutup" id="penutup">
       <div class="wk penutup__flower" data-orn="flower" data-leaves data-bloom></div>

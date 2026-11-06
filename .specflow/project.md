@@ -21,8 +21,8 @@ Situs statis di `/Users/user/MyProjects/undangan-digital`, repo git `main` → h
 | Platform and client | Web mobile-first, tetap rapi di desktop | Confirmed | Jawaban user |
 | Language | HTML, CSS, JavaScript vanilla (script klasik `defer`, agar juga jalan via `file://`) | Confirmed | Jawaban user |
 | Framework | Tanpa framework. Animasi memakai GSAP + ScrollTrigger | Confirmed | Jawaban user |
-| Runtime | Browser modern (Chrome Android, Safari iOS 15+). Tidak perlu server-side | Assumed | Situs statis |
-| Storage and data ownership | Tidak ada database. Konten ada di `assets/js/data.js` milik pemilik | Confirmed | Tanpa RSVP |
+| Runtime | Browser modern (Chrome Android, Safari iOS 15+). Server butuh PHP 7.4+ hanya untuk form ucapan; GitHub Pages tidak menjalankannya | Assumed | Fitur ucapan |
+| Storage and data ownership | Konten di `assets/js/data.js`. Ucapan & konfirmasi kehadiran tamu di SQLite `api/data/ucapan.sqlite` lewat `api/ucapan.php` (PHP + pdo_sqlite) | Confirmed | Permintaan user 2026-11-06 |
 | Identity and access | N/A. Undangan publik, nama tamu hanya tampilan dari URL | Confirmed | Lingkup satu pasangan |
 | Hosting and operation | Hosting/domain milik user, cukup upload file statis | Confirmed | Jawaban user |
 | Integrations | Tautan keluar ke Google Maps dan Google Calendar saja. GSAP dan font disimpan lokal | Confirmed / Assumed (kalender) | Jawaban user |

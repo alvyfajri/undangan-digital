@@ -1,0 +1,5 @@
+# Lindungi file database dari akses langsung (Apache / LiteSpeed / cPanel)
+Require all denied
+<IfModule !mod_authz_core.c>
+  Deny from all
+</IfModule>

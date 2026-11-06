@@ -10,3 +10,6 @@ Thumbs.db
 
 # Catatan konten pemilik (sudah dipindah ke data.js)
 content.md
+
+# Database ucapan tamu (dibuat otomatis oleh api/ucapan.php di server)
+api/data/*.sqlite*

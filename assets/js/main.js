@@ -263,6 +263,105 @@
     if (D.qris) { $("#qris-img").src = D.qris; $("#qris").hidden = false; }
   }
 
+  /* ---------- Ucapan & doa (SQLite via api/ucapan.php) ---------- */
+  (function () {
+    var sec = $("#ucapan");
+    if (!sec) return;
+    if (!D.ucapanApi) { sec.remove(); return; }
+    var API = D.ucapanApi;
+    var form = $("#wish-form"), list = $("#wishes"), status = $("#wishes-status"), stats = $("#wish-stats");
+    var errBox = $("#wish-error"), submit = $("#wish-submit"), nameIn = $("#wish-nama"), msgIn = $("#wish-ucapan"), count = $("#wish-count");
+    var LABEL = { hadir: "Hadir", tidak: "Tidak hadir", ragu: "Masih ragu" };
+
+    if (guest) nameIn.value = guest;
+    msgIn.addEventListener("input", function () { count.textContent = msgIn.value.length + " / 500"; });
+
+    function refreshScroll() { if (window.ScrollTrigger) window.ScrollTrigger.refresh(); }
+    function when(iso) {
+      var d = new Date(iso);
+      if (isNaN(d)) return "";
+      var s = Math.round((Date.now() - d.getTime()) / 1000);
+      if (s < 60) return "baru saja";
+      if (s < 3600) return Math.floor(s / 60) + " menit lalu";
+      if (s < 86400) return Math.floor(s / 3600) + " jam lalu";
+      if (s < 7 * 86400) return Math.floor(s / 86400) + " hari lalu";
+      return fmt(d, { day: "numeric", month: "short", year: "numeric" });
+    }
+    function card(w) {
+      var c = el("article", "wish");
+      var head = el("div", "wish__head");
+      head.appendChild(el("p", "wish__name", w.nama));
+      head.appendChild(el("span", "wish__badge wish__badge--" + w.kehadiran, LABEL[w.kehadiran] || ""));
+      c.appendChild(head);
+      c.appendChild(el("p", "wish__text", w.ucapan)); // textContent: aman dari HTML
+      var t = el("time", "wish__time", when(w.dibuat));
+      t.dateTime = w.dibuat;
+      c.appendChild(t);
+      return c;
+    }
+    function setStatus(text) {
+      status.textContent = text;
+      status.hidden = !text;
+      if (text && status.parentNode !== list) list.appendChild(status);
+    }
+    function renderStats(d) {
+      stats.textContent = "";
+      [["total", "Ucapan"], ["hadir", "Hadir"], ["ragu", "Ragu"], ["tidak", "Tidak hadir"]].forEach(function (p) {
+        var s = el("div", "wish-stat");
+        s.appendChild(el("strong", null, String(d[p[0]] || 0)));
+        s.appendChild(el("span", null, p[1]));
+        stats.appendChild(s);
+      });
+      stats.hidden = false;
+    }
+    function api(opts) {
+      return fetch(API, Object.assign({ headers: { "Accept": "application/json" }, cache: "no-store" }, opts)).then(function (r) {
+        return r.json().catch(function () { throw new Error("Server ucapan tidak tersedia."); }).then(function (j) {
+          if (!r.ok || !j.ok) throw new Error(j.error || "Gagal menghubungi server.");
+          return j;
+        });
+      });
+    }
+    var data = null;
+    function load() {
+      return api().then(function (d) {
+        data = d;
+        list.textContent = "";
+        d.items.forEach(function (w) { list.appendChild(card(w)); });
+        setStatus(d.items.length ? "" : "Belum ada ucapan. Jadilah yang pertama!");
+        renderStats(d);
+        refreshScroll();
+      }, function () {
+        setStatus("Ucapan belum dapat dimuat saat ini.");
+      });
+    }
+    load();
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var fd = new FormData(form);
+      var body = { nama: String(fd.get("nama") || "").trim(), kehadiran: fd.get("kehadiran") || "", ucapan: String(fd.get("ucapan") || "").trim(), website: fd.get("website") || "" };
+      var err = !body.nama ? "Nama wajib diisi." : !body.kehadiran ? "Pilih konfirmasi kehadiran." : body.ucapan.length < 2 ? "Ucapan wajib diisi." : "";
+      if (err) { errBox.textContent = err; errBox.hidden = false; return; }
+      errBox.hidden = true;
+      submit.disabled = true;
+      submit.textContent = "Mengirim…";
+      api({ method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(body) })
+        .then(function (res) {
+          if (res.item) {
+            setStatus("");
+            list.insertBefore(card(res.item), list.firstChild);
+            if (data) { data.total++; data[res.item.kehadiran]++; renderStats(data); }
+            refreshScroll();
+          }
+          msgIn.value = ""; count.textContent = "0 / 500";
+          form.querySelectorAll("input[name=kehadiran]").forEach(function (r) { r.checked = false; });
+          say("Terima kasih atas ucapan dan doanya");
+        }, function (ex) { errBox.textContent = ex.message; errBox.hidden = false; })
+        .then(function () { submit.disabled = false; submit.textContent = "Kirim Ucapan"; });
+    });
+  })();
+
   /* ---------- AC3: musik ---------- */
   var audio = $("#music"), mBtn = $("#music-btn"), musicOk = !!D.musik, wasPlaying = false;
   function setPlaying(on) {
