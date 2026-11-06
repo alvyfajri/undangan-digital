@@ -288,13 +288,48 @@
     if (D.qris) { $("#qris-img").src = D.qris; $("#qris").hidden = false; }
   }
 
+  /* ---------- hitung mundur menuju tanggalUtama ---------- */
+  (function () {
+    var box = $("#countdown");
+    if (!box) return;
+    if (!D.tanggalUtama) { box.remove(); return; }
+    var target = toDate(D.tanggalUtama).getTime();
+    var units = [["hari", 86400], ["jam", 3600], ["menit", 60], ["detik", 1]];
+    var nums = units.map(function (u) {
+      var s = el("div", "countdown__unit");
+      var n = el("strong", null, "0");
+      s.appendChild(n);
+      s.appendChild(el("span", null, u[0].charAt(0).toUpperCase() + u[0].slice(1)));
+      box.appendChild(s);
+      return n;
+    });
+    var timer;
+    function tick() {
+      var left = Math.max(0, Math.floor((target - Date.now()) / 1000));
+      if (!left) {
+        clearInterval(timer);
+        box.textContent = "";
+        box.appendChild(el("p", "countdown__done", "Hari bahagia telah tiba. Terima kasih atas doa restunya."));
+        return;
+      }
+      units.forEach(function (u, i) {
+        var v = Math.floor(left / u[1]);
+        left -= v * u[1];
+        nums[i].textContent = i ? String(v).padStart(2, "0") : String(v);
+      });
+    }
+    box.hidden = false;
+    tick();
+    timer = setInterval(tick, 1000);
+  })();
+
   /* ---------- Ucapan & doa (SQLite via api/ucapan.php) ---------- */
   (function () {
     var sec = $("#ucapan");
     if (!sec) return;
     if (!D.ucapanApi) { sec.remove(); return; }
     var API = D.ucapanApi;
-    var form = $("#wish-form"), list = $("#wishes"), status = $("#wishes-status"), stats = $("#wish-stats");
+    var form = $("#wish-form"), list = $("#wishes"), status = $("#wishes-status");
     var errBox = $("#wish-error"), submit = $("#wish-submit"), nameIn = $("#wish-nama"), msgIn = $("#wish-ucapan"), count = $("#wish-count");
     var LABEL = { hadir: "Hadir", tidak: "Tidak hadir", ragu: "Masih ragu" };
 
@@ -329,16 +364,6 @@
       status.hidden = !text;
       if (text && status.parentNode !== list) list.appendChild(status);
     }
-    function renderStats(d) {
-      stats.textContent = "";
-      [["total", "Ucapan"], ["hadir", "Hadir"], ["ragu", "Ragu"], ["tidak", "Tidak hadir"]].forEach(function (p) {
-        var s = el("div", "wish-stat");
-        s.appendChild(el("strong", null, String(d[p[0]] || 0)));
-        s.appendChild(el("span", null, p[1]));
-        stats.appendChild(s);
-      });
-      stats.hidden = false;
-    }
     function api(opts) {
       return fetch(API, Object.assign({ headers: { "Accept": "application/json" }, cache: "no-store" }, opts)).then(function (r) {
         return r.json().catch(function () { throw new Error("Server ucapan tidak tersedia."); }).then(function (j) {
@@ -347,14 +372,11 @@
         });
       });
     }
-    var data = null;
     function load() {
       return api().then(function (d) {
-        data = d;
         list.textContent = "";
         d.items.forEach(function (w) { list.appendChild(card(w)); });
         setStatus(d.items.length ? "" : "Belum ada ucapan. Jadilah yang pertama!");
-        renderStats(d);
         refreshScroll();
       }, function () {
         setStatus("Ucapan belum dapat dimuat saat ini.");
@@ -376,7 +398,6 @@
           if (res.item) {
             setStatus("");
             list.insertBefore(card(res.item), list.firstChild);
-            if (data) { data.total++; data[res.item.kehadiran]++; renderStats(data); }
             refreshScroll();
           }
           msgIn.value = ""; count.textContent = "0 / 500";
