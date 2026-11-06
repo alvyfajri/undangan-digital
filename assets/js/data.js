@@ -84,7 +84,7 @@ window.WEDDING = {
   teks: {
     salamPembuka: "Assalamu’alaikum Warahmatullahi Wabarakatuh",
     pengantar:
-      "Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami:",
+      "Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud melangsungkan pernikahan kami:",
     ayatArab:
       "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ",
     ayatArti:
