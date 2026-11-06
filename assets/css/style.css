@@ -301,11 +301,6 @@ textarea.field__input { resize: vertical; min-height: 110px; line-height: 1.5; }
 .wish-form__submit { justify-self: center; min-width: 180px; }
 .wish-form__submit:disabled { opacity: .6; cursor: progress; }
 
-.countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 28px 0 14px; }
-.countdown__unit { padding: 8px 4px; border-radius: 6px; background: var(--indigo-900); color: var(--krem); line-height: 1.2; }
-.countdown__unit strong { display: block; font-size: 24px; color: var(--emas-terang); font-variant-numeric: tabular-nums; }
-.countdown__unit span { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
-.countdown__done { grid-column: 1 / -1; padding: 10px; border-radius: 6px; background: var(--indigo-900); color: var(--emas-terang); font-style: italic; }
 .wishes { display: grid; gap: 10px; max-height: 460px; overflow-y: auto; padding: 4px 4px 4px 0; text-align: left; overscroll-behavior: contain; }
 .wishes__empty { text-align: center; font-style: italic; color: var(--tinta-2); padding: 12px 0; }
 .wish { padding: 12px 14px; border-radius: 6px; background: #fff; box-shadow: 0 0 0 1px rgba(201, 162, 74, .35); }

@@ -288,41 +288,6 @@
     if (D.qris) { $("#qris-img").src = D.qris; $("#qris").hidden = false; }
   }
 
-  /* ---------- hitung mundur menuju tanggalUtama ---------- */
-  (function () {
-    var box = $("#countdown");
-    if (!box) return;
-    if (!D.tanggalUtama) { box.remove(); return; }
-    var target = toDate(D.tanggalUtama).getTime();
-    var units = [["hari", 86400], ["jam", 3600], ["menit", 60], ["detik", 1]];
-    var nums = units.map(function (u) {
-      var s = el("div", "countdown__unit");
-      var n = el("strong", null, "0");
-      s.appendChild(n);
-      s.appendChild(el("span", null, u[0].charAt(0).toUpperCase() + u[0].slice(1)));
-      box.appendChild(s);
-      return n;
-    });
-    var timer;
-    function tick() {
-      var left = Math.max(0, Math.floor((target - Date.now()) / 1000));
-      if (!left) {
-        clearInterval(timer);
-        box.textContent = "";
-        box.appendChild(el("p", "countdown__done", "Hari bahagia telah tiba. Terima kasih atas doa restunya."));
-        return;
-      }
-      units.forEach(function (u, i) {
-        var v = Math.floor(left / u[1]);
-        left -= v * u[1];
-        nums[i].textContent = i ? String(v).padStart(2, "0") : String(v);
-      });
-    }
-    box.hidden = false;
-    tick();
-    timer = setInterval(tick, 1000);
-  })();
-
   /* ---------- Ucapan & doa (SQLite via api/ucapan.php) ---------- */
   (function () {
     var sec = $("#ucapan");
