@@ -9,7 +9,7 @@
   <meta name="description" content="Undangan pernikahan digital.">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/pinyon-script-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=10">
+  <link rel="stylesheet" href="assets/css/style.css?v=16">
 </head>
 <body>
   <!-- Sprite ornamen: awan Mega Mendung (Cirebon) -->
@@ -36,16 +36,13 @@
   <div class="stage" aria-hidden="true">
     <svg class="stage__cloud stage__cloud--l"><use href="#mm"/></svg>
     <svg class="stage__cloud stage__cloud--r"><use href="#mm-2"/></svg>
-    <!-- Layar lebar: foto besar di kiri, undangan di kanan (diisi dari data.js fotoSamping) -->
+    <!-- Layar lebar: foto besar di kiri yang berganti mengikuti bagian yang dibaca (diisi dari data.js fotoSamping) -->
     <div class="stage__photo" id="stage-photo">
-      <div class="stage__caption">
-        <p class="stage__eyebrow">Undangan Pernikahan</p>
-        <p class="script stage__names">
-          <span data-urut="pria" data-bind="pria.panggilan"></span>
-          <span class="amp">&amp;</span>
-          <span data-urut="wanita" data-bind="wanita.panggilan"></span>
-        </p>
-        <p class="stage__date" id="stage-date"></p>
+      <div class="stage__layers" id="stage-layers"></div>
+      <div class="stage__caption" id="stage-caption">
+        <p class="stage__eyebrow" id="stage-eyebrow"></p>
+        <p class="script stage__names" id="stage-title"></p>
+        <p class="stage__date" id="stage-sub"></p>
       </div>
     </div>
   </div>
@@ -255,11 +252,11 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script defer src="assets/js/data.js?v=9"></script>
+  <script defer src="assets/js/data.js?v=10"></script>
   <script defer src="assets/vendor/gsap/gsap.min.js"></script>
   <script defer src="assets/vendor/gsap/ScrollTrigger.min.js"></script>
   <script defer src="assets/js/ornaments.js?v=2"></script>
-  <script defer src="assets/js/main.js?v=7"></script>
+  <script defer src="assets/js/main.js?v=10"></script>
   <script defer src="assets/js/motion.js?v=2"></script>
 </body>
 </html>

@@ -59,8 +59,15 @@ window.WEDDING = {
   ],
 
   // Layar lebar (≥ 900px): foto besar di sisi kiri, undangan di sisi kanan. Rasio ±1:1.
-  // Kosongkan "" untuk undangan di tengah dengan latar awan Mega Mendung.
-  fotoSamping: "assets/img/foto/samping.jpg",
+  // Foto berganti mengikuti bagian yang sedang dibaca tamu. Hanya "awal" yang wajib;
+  // bagian tanpa foto sendiri memakai foto "awal". Kosongkan awal ("") agar undangan di tengah.
+  fotoSamping: {
+    awal: "assets/img/foto/samping-awal.jpg",       // cover, salam, ucapan
+    pria: "assets/img/foto/samping-pria.jpg",       // bagian mempelai pria
+    wanita: "assets/img/foto/samping-wanita.jpg",   // bagian mempelai wanita
+    acara: "assets/img/foto/samping-acara.jpg",     // acara & amplop
+    penutup: "assets/img/foto/samping-penutup.jpg", // penutup
+  },
 
   // Foto galeri. Taruh file di assets/img/gallery/ lalu tulis path-nya.
   // Dikosongkan ([]) = bagian galeri disembunyikan.

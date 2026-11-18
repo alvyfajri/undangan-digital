@@ -123,27 +123,93 @@
   if (D.mempelai) doc.title = "Undangan Pernikahan " + namaPasangan;
   if (D.tanggalUtama) $("#cover-date").textContent = fmtDay(D.tanggalUtama);
 
-  /* ---------- layar lebar (≥ 900px): foto besar di kiri, undangan di kanan ---------- */
+  /* ---------- layar lebar (≥ 900px): foto besar di kiri berganti mengikuti bagian yang dibaca ---------- */
   (function () {
     var stage = $(".stage"), photo = $("#stage-photo");
     if (!stage || !photo) return;
-    if (!D.fotoSamping) { doc.documentElement.classList.remove("has-side-photo"); photo.remove(); return; } // kembali ke undangan di tengah
-    if (D.tanggalUtama) $("#stage-date").textContent = fmtDay(D.tanggalUtama);
-    var mq = window.matchMedia("(min-width: 900px)"), loaded = false;
-    function load() {
-      if (loaded || !mq.matches) return; // HP tidak mengunduh foto ini
-      loaded = true;
+    var P = typeof D.fotoSamping === "string" ? { awal: D.fotoSamping } : (D.fotoSamping || {});
+    if (!P.awal) { doc.documentElement.classList.remove("has-side-photo"); photo.remove(); return; } // kembali ke undangan di tengah
+    var mq = window.matchMedia("(min-width: 900px)"), started = false;
+    var layersHost = $("#stage-layers"), cap = $("#stage-caption");
+
+    // Teks keterangan per bagian
+    var M = D.mempelai || {}, A = D.acara || [];
+    var CAP = {
+      awal: { e: "Undangan Pernikahan", t: namaPasangan, s: D.tanggalUtama ? fmtDay(D.tanggalUtama) : "" },
+      pria: { e: "Mempelai Pria", t: M.pria && M.pria.panggilan, s: M.pria && M.pria.lengkap },
+      wanita: { e: "Mempelai Wanita", t: M.wanita && M.wanita.panggilan, s: M.wanita && M.wanita.lengkap },
+      acara: { e: "Hari Bahagia", t: A.map(function (a) { return a.nama; }).join(" & "), s: A[0] ? fmtDay(A[0].mulai) : "" },
+      penutup: { e: "Terima Kasih", t: namaPasangan, s: "Kami yang berbahagia" },
+    };
+    function srcOf(key) { return P[key] || P.awal; }
+
+    // Bagian undangan → foto. Yang paling dekat di atas garis tengah layar yang menang.
+    var map = [
+      ["awal", $("#salam")], ["pria", $('.person[data-urut="pria"]')], ["wanita", $('.person[data-urut="wanita"]')],
+      ["acara", $("#acara")], ["acara", $("#amplop")], ["awal", $("#ucapan")], ["penutup", $("#penutup")],
+    ].filter(function (m) { return m[1]; });
+
+    var layers = {}, current = null;
+    var POS = { awal: "58% 30%", pria: "50% 25%", wanita: "50% 30%", acara: "50% 0%", penutup: "50% 50%" }; // titik fokus tiap foto
+    function layerFor(src, key) {
+      if (layers[src]) return layers[src];
+      var d = el("div", "stage__layer");
+      if (POS[key]) d.style.backgroundPosition = POS[key];
+      layersHost.appendChild(d);
       var img = new Image();
-      img.onload = function () {
-        photo.style.backgroundImage = 'url("' + encodeURI(D.fotoSamping) + '")';
+      img.onload = function () { d.style.backgroundImage = 'url("' + encodeURI(src) + '")'; };
+      img.src = src;
+      return (layers[src] = d);
+    }
+    function show(key) {
+      if (key === current) return;
+      var first = current === null;
+      current = key;
+      var src = srcOf(key);
+      Object.keys(layers).forEach(function (s) { layers[s].classList.toggle("is-active", s === src); });
+      layerFor(src, key).classList.add("is-active");
+      var c = CAP[key] || CAP.awal;
+      function setText() {
+        $("#stage-eyebrow").textContent = c.e || "";
+        $("#stage-title").textContent = c.t || "";
+        $("#stage-sub").textContent = c.s || "";
+        cap.classList.toggle("stage__caption--name", key === "pria" || key === "wanita"); // nama + gelar: jangan huruf besar semua
+        cap.classList.remove("is-out");
+      }
+      if (first) setText(); else { cap.classList.add("is-out"); setTimeout(setText, 300); }
+    }
+    function pick() {
+      var mid = window.innerHeight * 0.5, best = "awal", bestTop = -Infinity;
+      map.forEach(function (m) {
+        var top = m[1].getBoundingClientRect().top;
+        if (top <= mid && top > bestTop) { bestTop = top; best = m[0]; }
+      });
+      return best;
+    }
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; show(pick()); });
+    }
+    function start() {
+      if (started || !mq.matches) return; // HP tidak mengunduh foto ini
+      started = true;
+      var first = new Image();
+      first.onload = function () {
+        show(pick());
         photo.classList.add("is-ready");
         stage.classList.add("has-photos");
+        // foto bagian lain dimuat setelah foto pertama, agar tidak berebut bandwidth
+        setTimeout(function () { Object.keys(P).forEach(function (k) { if (P[k]) layerFor(P[k], k); }); }, 600);
       };
-      img.onerror = function () { doc.documentElement.classList.remove("has-side-photo"); }; // foto gagal: undangan kembali ke tengah
-      img.src = D.fotoSamping;
+      first.onerror = function () { doc.documentElement.classList.remove("has-side-photo"); }; // foto gagal: undangan kembali ke tengah
+      first.src = P.awal;
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
     }
-    load();
-    if (mq.addEventListener) mq.addEventListener("change", load);
+    start();
+    if (mq.addEventListener) mq.addEventListener("change", start);
   })();
 
   /* ---------- foto mempelai (opsional) ---------- */
