@@ -24,6 +24,7 @@ Semua isi ada di **`assets/js/data.js`**. Edit file ini saja, tidak perlu menyen
 | Bagian | Yang diubah |
 |---|---|
 | Mempelai | `mempelai.pria` / `mempelai.wanita`: panggilan, nama lengkap, keterangan ("Putra pertama dari"), ayah, ibu, asal |
+| Foto samping (layar lebar) | `fotoSamping` → foto besar di sisi kiri pada layar ≥ 900 px, undangan menempel di sisi kanan (rasio ±1:1). Tidak diunduh di HP. Kosongkan `""` agar undangan di tengah dengan latar awan |
 | Tanggal cover | `tanggalUtama` → `"2026-12-13T08:00"` |
 | Acara | `acara[]`: nama, `mulai`, `selesai` (isi `null` jika "selesai"), tempat, alamat, `maps` (link Google Maps) |
 | Galeri | `galeri[]`: `{ src, alt }`. Kosongkan `[]` untuk menyembunyikan bagian ini |

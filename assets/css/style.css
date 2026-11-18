@@ -69,6 +69,27 @@ button { font: inherit; }
 .stage__cloud--r { right: -12vw; bottom: 6vh; transform: scaleX(-1); }
 @media (max-width: 560px) { .stage { display: none; } }
 
+/* Layar lebar (≥ 900px): foto besar di sisi kiri, kolom undangan (480px) menempel di sisi kanan. */
+.stage__photo { display: none; }
+@media (min-width: 900px) {
+  .stage__photo { display: block; position: absolute; top: 0; bottom: 0; left: 0; width: calc(100% - 480px);
+    background: var(--indigo-900) 58% 30% / cover no-repeat; opacity: 0; transition: opacity 1.4s ease; }
+  .stage__photo.is-ready { opacity: 1; }
+  .stage__photo::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(0deg, rgba(20, 32, 74, .88) 0%, rgba(20, 32, 74, .55) 24%, rgba(20, 32, 74, 0) 52%),
+                linear-gradient(90deg, rgba(20, 32, 74, .3), rgba(20, 32, 74, 0) 40%); }
+  .stage.has-photos { background-image: none; }
+  .stage.has-photos .stage__cloud { display: none; }
+  html.has-side-photo .app, html.has-side-photo .cover { margin: 0 0 0 auto; }
+  html.has-side-photo .music { right: 16px; }
+  html.has-side-photo .toast { left: calc(100% - 240px); }
+}
+.stage__caption { position: absolute; z-index: 1; left: 7%; right: 7%; bottom: 8%; color: var(--krem); text-shadow: 0 1px 14px rgba(15, 26, 62, .9); }
+.stage__eyebrow { font-size: 14px; font-weight: 600; letter-spacing: .35em; text-transform: uppercase; color: var(--emas-terang); }
+.stage__names { margin-top: 4px; font-size: clamp(48px, 5.8vw, 96px); line-height: 1.1; color: var(--kertas); }
+.stage__names .amp { font-size: .6em; color: var(--emas-terang); }
+.stage__date { margin-top: 8px; font-size: 17px; letter-spacing: .14em; text-transform: uppercase; }
+
 /* ---- Kolom undangan ---- */
 .app { position: relative; z-index: 1; width: var(--col); margin: 0 auto; background: var(--kertas); overflow: hidden;
   box-shadow: 0 0 0 1px rgba(201, 162, 74, .35), 0 30px 80px rgba(0, 0, 0, .45); }
@@ -200,14 +221,38 @@ button { font: inherit; }
 .ayat__arti { margin: 14px 0 10px; font-size: 17px; font-style: italic; color: var(--tinta-2); }
 .ayat__src { font-weight: 600; color: var(--emas-gelap); letter-spacing: .08em; font-size: 15px; }
 .salam__intro { max-width: 34ch; margin: 0 auto 30px; color: var(--tinta-2); }
-.couple { display: grid; gap: 10px; }
-.person { padding: 10px 0; }
-.person__origin { display: inline-block; font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: var(--kertas);
-  background: var(--indigo-700); padding: 3px 12px 3px 14px; border-radius: 99px; }
+.couple { display: grid; gap: 8px; }
+.person { padding: 10px 0 6px; }
+
+/* Foto oval tinggi di satu sisi, nama di sisi lain; bergantian kiri/kanan (mengikuti urutan, bukan gender) */
+.person__top { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.couple > .person:last-child .person__top { flex-direction: row-reverse; }
+.person__frame { position: relative; flex: 0 0 54%; max-width: 250px; }
+.person__frame::before { content: ""; position: absolute; inset: 0; border: 1px solid var(--emas); border-radius: 999px; transform: translate(-10px, -8px); }
+.couple > .person:last-child .person__frame::before { transform: translate(10px, -8px); }
+.person__photo { position: relative; z-index: 1; margin: 0; aspect-ratio: 5 / 7; border-radius: 999px; overflow: hidden; background: var(--krem);
+  box-shadow: 0 0 0 2px var(--emas), 0 16px 30px rgba(20, 32, 74, .2); }
+.person__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* ornamen daerah di sudut luar foto: awan Mega Mendung (Cirebon) / Wijayakusuma (Cilacap) */
+.person__deco { position: absolute; z-index: 2; bottom: 2%; pointer-events: none; filter: drop-shadow(0 6px 10px rgba(20, 32, 74, .22)); }
+.couple > .person:first-child .person__deco { left: -12%; }
+.couple > .person:last-child .person__deco { right: -12%; }
+.person__deco--cloud { width: 64%; }
+.person__deco--flower { width: 48%; height: auto; aspect-ratio: 1; }
+.person__deco--flower svg { width: 100%; height: 100%; display: block; }
+
+.person__head { flex: 1 1 0; min-width: 0; text-align: center; }
+.person__role { font-size: 11px; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--emas-gelap); }
+.person__nick { font-size: clamp(42px, 13.5vw, 54px); line-height: 1.1; color: var(--indigo-700); margin: 6px 0 10px; }
+.person__origin { display: inline-block; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--kertas);
+  background: var(--indigo-700); padding: 3px 10px 3px 12px; border-radius: 99px; }
 .person__origin--sea { background: var(--indigo-500); }
-.person__nick { font-size: 56px; color: var(--indigo-700); margin-top: 6px; }
-.person__full { font-size: 21px; font-weight: 600; }
-.person__parents { margin-top: 6px; font-size: 17px; color: var(--tinta-2); }
+.person__full { margin-top: 22px; font-size: 21px; font-weight: 600; color: var(--indigo-900); }
+.person__parents { margin: 12px auto 0; padding-top: 12px; max-width: 30ch; font-size: 17px; line-height: 1.45; color: var(--tinta-2);
+  background: linear-gradient(90deg, transparent, var(--emas), transparent) top center / 120px 1px no-repeat; }
+.person__ket { display: block; margin-bottom: 4px; font-size: 16px; font-style: italic; }
+.person__parent { display: block; font-weight: 600; color: var(--tinta); }
+.person__and { display: block; font-family: var(--script); font-size: 26px; line-height: 1.1; color: var(--emas); }
 .couple__amp { font-size: 54px; color: var(--emas); line-height: 1; }
 
 /* Acara */

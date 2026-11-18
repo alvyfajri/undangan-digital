@@ -16,14 +16,16 @@ window.WEDDING = {
       ayah: "Bapak H. Akhmad Rosyidin",
       ibu: "Ibu Hj. Sholikah",
       asal: "Cirebon",
+      foto: "assets/img/mempelai/alvy.jpg", // kosongkan "" bila tanpa foto
     },
     wanita: {
       panggilan: "Aidah",
-      lengkap: "Aidah Wuryaningtyas, S.Pd",
+      lengkap: "Aidah Wuryaningtyas, S.Pd., Gr.",
       keterangan: "Putri ketiga dari",
       ayah: "Bapak H. Basuki",
       ibu: "Ibu Partin Wuryani",
       asal: "Cilacap",
+      foto: "assets/img/mempelai/aidah.jpg?v=5",
     },
   },
 
@@ -56,15 +58,13 @@ window.WEDDING = {
     },
   ],
 
+  // Layar lebar (≥ 900px): foto besar di sisi kiri, undangan di sisi kanan. Rasio ±1:1.
+  // Kosongkan "" untuk undangan di tengah dengan latar awan Mega Mendung.
+  fotoSamping: "assets/img/foto/samping.jpg",
+
   // Foto galeri. Taruh file di assets/img/gallery/ lalu tulis path-nya.
-  galeri: [
-    { src: "assets/img/gallery/contoh-1.svg", alt: "Foto prewedding 1" },
-    { src: "assets/img/gallery/contoh-2.svg", alt: "Foto prewedding 2" },
-    { src: "assets/img/gallery/contoh-3.svg", alt: "Foto prewedding 3" },
-    { src: "assets/img/gallery/contoh-4.svg", alt: "Foto prewedding 4" },
-    { src: "assets/img/gallery/contoh-5.svg", alt: "Foto prewedding 5" },
-    { src: "assets/img/gallery/contoh-6.svg", alt: "Foto prewedding 6" },
-  ],
+  // Dikosongkan ([]) = bagian galeri disembunyikan.
+  galeri: [],
 
   // Amplop digital. Kosongkan ([]) untuk menyembunyikan.
   amplop: [

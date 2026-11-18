@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id" class="is-locked">
+<html lang="id" class="is-locked has-side-photo">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -9,7 +9,7 @@
   <meta name="description" content="Undangan pernikahan digital.">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/pinyon-script-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=5">
+  <link rel="stylesheet" href="assets/css/style.css?v=10">
 </head>
 <body>
   <!-- Sprite ornamen: awan Mega Mendung (Cirebon) -->
@@ -36,6 +36,18 @@
   <div class="stage" aria-hidden="true">
     <svg class="stage__cloud stage__cloud--l"><use href="#mm"/></svg>
     <svg class="stage__cloud stage__cloud--r"><use href="#mm-2"/></svg>
+    <!-- Layar lebar: foto besar di kiri, undangan di kanan (diisi dari data.js fotoSamping) -->
+    <div class="stage__photo" id="stage-photo">
+      <div class="stage__caption">
+        <p class="stage__eyebrow">Undangan Pernikahan</p>
+        <p class="script stage__names">
+          <span data-urut="pria" data-bind="pria.panggilan"></span>
+          <span class="amp">&amp;</span>
+          <span data-urut="wanita" data-bind="wanita.panggilan"></span>
+        </p>
+        <p class="stage__date" id="stage-date"></p>
+      </div>
+    </div>
   </div>
 
   <!-- ============ COVER ============ -->
@@ -94,25 +106,47 @@
       <p class="salam__intro" data-reveal data-bind="teks.pengantar"></p>
 
       <div class="couple">
-        <article class="person" data-reveal data-urut="pria">
-          <span class="person__origin" data-bind="pria.asal"></span>
-          <h2 class="script person__nick" data-bind="pria.panggilan"></h2>
-          <p class="person__full" data-bind="pria.lengkap"></p>
-          <p class="person__parents">
-            <span data-bind="pria.keterangan"></span><br>
-            <span data-bind="pria.ayah"></span> &amp; <span data-bind="pria.ibu"></span>
+        <article class="person" data-urut="pria">
+          <div class="person__top">
+            <div class="person__frame" data-reveal hidden>
+              <figure class="person__photo" data-foto="pria"><img alt="" loading="lazy" decoding="async"></figure>
+              <svg class="cloud person__deco person__deco--cloud" aria-hidden="true"><use href="#mm-3"/></svg>
+            </div>
+            <div class="person__head" data-reveal>
+              <p class="person__role">Mempelai Pria</p>
+              <h2 class="script person__nick" data-bind="pria.panggilan"></h2>
+              <span class="person__origin" data-bind="pria.asal"></span>
+            </div>
+          </div>
+          <p class="person__full" data-reveal data-bind="pria.lengkap"></p>
+          <p class="person__parents" data-reveal>
+            <span class="person__ket" data-bind="pria.keterangan"></span>
+            <span class="person__parent" data-bind="pria.ayah"></span>
+            <span class="person__and">&amp;</span>
+            <span class="person__parent" data-bind="pria.ibu"></span>
           </p>
         </article>
 
         <div class="couple__amp script" data-reveal aria-hidden="true">&amp;</div>
 
-        <article class="person" data-reveal data-urut="wanita">
-          <span class="person__origin person__origin--sea" data-bind="wanita.asal"></span>
-          <h2 class="script person__nick" data-bind="wanita.panggilan"></h2>
-          <p class="person__full" data-bind="wanita.lengkap"></p>
-          <p class="person__parents">
-            <span data-bind="wanita.keterangan"></span><br>
-            <span data-bind="wanita.ayah"></span> &amp; <span data-bind="wanita.ibu"></span>
+        <article class="person" data-urut="wanita">
+          <div class="person__top">
+            <div class="person__frame" data-reveal hidden>
+              <figure class="person__photo" data-foto="wanita"><img alt="" loading="lazy" decoding="async"></figure>
+              <div class="wk person__deco person__deco--flower" data-orn="flower" data-leaves></div>
+            </div>
+            <div class="person__head" data-reveal>
+              <p class="person__role">Mempelai Wanita</p>
+              <h2 class="script person__nick" data-bind="wanita.panggilan"></h2>
+              <span class="person__origin person__origin--sea" data-bind="wanita.asal"></span>
+            </div>
+          </div>
+          <p class="person__full" data-reveal data-bind="wanita.lengkap"></p>
+          <p class="person__parents" data-reveal>
+            <span class="person__ket" data-bind="wanita.keterangan"></span>
+            <span class="person__parent" data-bind="wanita.ayah"></span>
+            <span class="person__and">&amp;</span>
+            <span class="person__parent" data-bind="wanita.ibu"></span>
           </p>
         </article>
       </div>
@@ -221,11 +255,11 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script defer src="assets/js/data.js?v=2"></script>
+  <script defer src="assets/js/data.js?v=9"></script>
   <script defer src="assets/vendor/gsap/gsap.min.js"></script>
   <script defer src="assets/vendor/gsap/ScrollTrigger.min.js"></script>
   <script defer src="assets/js/ornaments.js?v=2"></script>
-  <script defer src="assets/js/main.js?v=4"></script>
+  <script defer src="assets/js/main.js?v=7"></script>
   <script defer src="assets/js/motion.js?v=2"></script>
 </body>
 </html>

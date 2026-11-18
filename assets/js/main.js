@@ -123,6 +123,42 @@
   if (D.mempelai) doc.title = "Undangan Pernikahan " + namaPasangan;
   if (D.tanggalUtama) $("#cover-date").textContent = fmtDay(D.tanggalUtama);
 
+  /* ---------- layar lebar (≥ 900px): foto besar di kiri, undangan di kanan ---------- */
+  (function () {
+    var stage = $(".stage"), photo = $("#stage-photo");
+    if (!stage || !photo) return;
+    if (!D.fotoSamping) { doc.documentElement.classList.remove("has-side-photo"); photo.remove(); return; } // kembali ke undangan di tengah
+    if (D.tanggalUtama) $("#stage-date").textContent = fmtDay(D.tanggalUtama);
+    var mq = window.matchMedia("(min-width: 900px)"), loaded = false;
+    function load() {
+      if (loaded || !mq.matches) return; // HP tidak mengunduh foto ini
+      loaded = true;
+      var img = new Image();
+      img.onload = function () {
+        photo.style.backgroundImage = 'url("' + encodeURI(D.fotoSamping) + '")';
+        photo.classList.add("is-ready");
+        stage.classList.add("has-photos");
+      };
+      img.onerror = function () { doc.documentElement.classList.remove("has-side-photo"); }; // foto gagal: undangan kembali ke tengah
+      img.src = D.fotoSamping;
+    }
+    load();
+    if (mq.addEventListener) mq.addEventListener("change", load);
+  })();
+
+  /* ---------- foto mempelai (opsional) ---------- */
+  if (D.mempelai) {
+    $$("[data-foto]").forEach(function (fig) {
+      var m = D.mempelai[fig.getAttribute("data-foto")];
+      if (!m || !m.foto) return; // tanpa foto: bingkai tetap tersembunyi
+      var frame = fig.parentNode, img = fig.querySelector("img");
+      img.alt = "Foto " + m.panggilan;
+      img.onerror = function () { frame.hidden = true; };
+      img.src = m.foto;
+      frame.hidden = false;
+    });
+  }
+
   /* ---------- AC1: nama tamu ---------- */
   var guest = "";
   try { guest = new URLSearchParams(location.search).get("to") || ""; } catch (e) { guest = ""; }
