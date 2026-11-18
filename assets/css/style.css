@@ -23,11 +23,12 @@
   --kertas: #faf5ea;
   --tinta: #1d1a16;
   --tinta-2: #4a4337;
+  --mawar: #cf9a92; /* merah muda debu, diambil dari bunga di foto */
 
   /* lapisan awan Mega Mendung — versi gelap (default) */
   /* Mega Mendung: 7 gradasi seperti batik (tepi gelap → tengah terang), garis putih */
   /* Mega Mendung: garis luar, garis krem, pita terang → inti gelap */
-  --mm-1: #0f1a3e; --mm-line: #f5ecd9; --mm-2: #5b95dc; --mm-3: #2f6bc6; --mm-4: #3a4dae; --mm-5: #22306c;
+  --mm-1: #0f1a3e; --mm-line: #f5ecd9; --mm-2: #80a7d5; --mm-3: #5c84c0; --mm-4: #5c69a9; --mm-5: #384169;
 
   --col: min(100%, 480px);
   --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
@@ -208,7 +209,7 @@ button { font: inherit; }
 /* ============ SECTIONS ============ */
 .sec { position: relative; padding: 72px 24px; text-align: center; overflow: hidden; }
 .sec--paper { background: var(--kertas);
-  background-image: radial-gradient(rgba(201, 162, 74, .08) 1px, transparent 1px); background-size: 14px 14px; }
+  background-image: radial-gradient(rgba(207, 154, 146, .16) 1px, transparent 1px); background-size: 14px 14px; }
 .sec--sky { color: var(--krem); background: url(../img/mega-mendung-tile.svg) 0 0 / 220px auto, linear-gradient(180deg, var(--indigo-900), var(--indigo-700)); }
 .sec__title { font-size: 50px; color: var(--kertas); margin: 4px 0 28px; }
 .sec > :not(.cloud):not(.waves) { position: relative; z-index: 2; }
@@ -238,7 +239,7 @@ button { font: inherit; }
 .person__top { display: flex; align-items: center; justify-content: center; gap: 12px; }
 .couple > .person:last-child .person__top { flex-direction: row-reverse; }
 .person__frame { position: relative; flex: 0 0 54%; max-width: 250px; }
-.person__frame::before { content: ""; position: absolute; inset: 0; border: 1px solid var(--emas); border-radius: 999px; transform: translate(-10px, -8px); }
+.person__frame::before { content: ""; position: absolute; inset: 0; border: 1px solid var(--mawar); border-radius: 999px; transform: translate(-10px, -8px); }
 .couple > .person:last-child .person__frame::before { transform: translate(10px, -8px); }
 .person__photo { position: relative; z-index: 1; margin: 0; aspect-ratio: 5 / 7; border-radius: 999px; overflow: hidden; background: var(--krem);
   box-shadow: 0 0 0 2px var(--emas), 0 16px 30px rgba(20, 32, 74, .2); }
@@ -262,8 +263,8 @@ button { font: inherit; }
   background: linear-gradient(90deg, transparent, var(--emas), transparent) top center / 120px 1px no-repeat; }
 .person__ket { display: block; margin-bottom: 4px; font-size: 16px; font-style: italic; }
 .person__parent { display: block; font-weight: 600; color: var(--tinta); }
-.person__and { display: block; font-family: var(--script); font-size: 26px; line-height: 1.1; color: var(--emas); }
-.couple__amp { font-size: 54px; color: var(--emas); line-height: 1; }
+.person__and { display: block; font-family: var(--script); font-size: 26px; line-height: 1.1; color: var(--mawar); }
+.couple__amp { font-size: 54px; color: var(--mawar); line-height: 1; }
 
 /* Acara */
 .acara { padding-bottom: 130px; background: linear-gradient(180deg, var(--indigo-900) 0%, var(--indigo-800) 55%, var(--indigo-700) 100%); }
