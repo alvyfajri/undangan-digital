@@ -149,13 +149,13 @@
     host.innerHTML =
       '<svg viewBox="0 0 400 620" preserveAspectRatio="xMidYMax meet">' +
       "<defs>" +
-      '<radialGradient id="gate-inner" cx="50%" cy="18%" r="80%"><stop offset="0" stop-color="#5a4320"/><stop offset=".35" stop-color="#22223a"/><stop offset="1" stop-color="#0b1130"/></radialGradient>' +
-      '<linearGradient id="plaster" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfbf6"/><stop offset="1" stop-color="#e8e2d4"/></linearGradient>' +
+      '<radialGradient id="gate-inner" cx="50%" cy="18%" r="80%"><stop offset="0" stop-color="#5a4320"/><stop offset=".35" stop-color="#2f201c"/><stop offset="1" stop-color="#1a0f0c"/></radialGradient>' +
+      '<linearGradient id="plaster" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfbf6"/><stop offset="1" stop-color="#ece0d4"/></linearGradient>' +
       '<radialGradient id="glow"><stop offset="0" stop-color="#ffd98a" stop-opacity=".9"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient>' +
       "</defs>" +
       // isi pintu
       '<path d="' + arch + '" fill="url(#gate-inner)"/>' +
-      '<path d="M104 572 H296 V604 H104Z" fill="#1a2040"/><path d="M104 572 H296" stroke="#3a4266" stroke-width="1.2"/>' +
+      '<path d="M104 572 H296 V604 H104Z" fill="#2a1a16"/><path d="M104 572 H296" stroke="#5a3d33" stroke-width="1.2"/>' +
       // lentera
       '<g class="gate__lantern"><path d="M200 262 V284" stroke="#8f6d22" stroke-width="1.2"/>' +
       '<circle class="gate__glow" cx="200" cy="296" r="34" fill="url(#glow)"/>' +
@@ -167,7 +167,7 @@
       '<path class="relief" d="M86 318 H110 M290 318 H314"/>' +
       diamonds + rocks +
       // atap & cornice
-      '<path d="M26 214 H374 V228 H26Z" fill="#2c3246"/><path d="' + tiles + '" stroke="#4b536e" stroke-width="1.4"/>' +
+      '<path d="M26 214 H374 V228 H26Z" fill="#3b2520"/><path d="' + tiles + '" stroke="#6b4a3e" stroke-width="1.4"/>' +
       '<path class="plaster relief-edge" d="M34 194 H366 V214 H34Z"/><path class="relief" d="' + scallop + '"/>' +
       // mahkota
       '<path class="plaster relief-edge" d="' + CROWN + '"/>' +
